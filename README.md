@@ -2,20 +2,16 @@
 
 
 
-1. Clonar proyecto
 
-```bash
-git clone https://github.com/cristian-ortega/restaurant_app.git
-```
 
-2. Instalar dependencias
+1. Instalar dependencias
 
 ```bash
 cd restaurant_app
 npm install
 ```
 
-3. Correr proyecto
+2. Correr proyecto
 
 ```bash
 npm run dev
