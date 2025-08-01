@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import API from "@/lib/axios"
+import { canManage } from "@/lib/auth"
 
 const productSchema = z.object({
   id: z.string().optional(),
@@ -171,13 +172,15 @@ export default function ProductsPage() {
 
           <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
             <DialogTrigger asChild>
-              <Button
+              {canManage("CREATE")? (
+                <Button
                 className="bg-amber-600 hover:bg-amber-700 text-white shadow-lg w-full sm:w-auto"
                 onClick={() => setIsDialogOpen(true)}
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Nuevo Producto
               </Button>
+              ) : null}
             </DialogTrigger>
             <DialogContent className="sm:max-w-md mx-4">
               <DialogHeader>

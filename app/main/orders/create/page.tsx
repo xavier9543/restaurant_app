@@ -8,6 +8,7 @@ import { Plus, Minus, ShoppingCart, UtensilsCrossed } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Product, OrderItem } from "@/app/interfaces"
 import API from "@/lib/axios"
+import { canManage } from "@/lib/auth"
 
 export default function CreateOrderPage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -89,7 +90,7 @@ export default function CreateOrderPage() {
           title: "¡Orden creada!",
           description: "La orden se ha registrado exitosamente",
         })
-        router.push("/dashboard")
+        router.push("/main/dashboard")
       } else {
         throw new Error("Error al crear orden")
       }
@@ -222,15 +223,17 @@ export default function CreateOrderPage() {
                         <span className="text-gray-900">Total:</span>
                         <span className="text-amber-600">${getTotal().toFixed(2)}</span>
                       </div>
-
-                      <Button
-                        onClick={createOrder}
-                        disabled={creating}
-                        className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white py-3 text-base font-semibold shadow-lg"
-                      >
-                        {creating ? "Procesando..." : "Cerrar Orden"}
-                      </Button>
+                      {canManage("CREATE") && (
+                        <Button
+                          onClick={createOrder}
+                          disabled={creating}
+                          className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white py-3 text-base font-semibold shadow-lg"
+                        >
+                          {creating ? "Procesando..." : "Cerrar Orden"}
+                        </Button>
+                      )}
                     </div>
+
                   </div>
                 )}
               </CardContent>

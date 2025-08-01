@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import { ShoppingCart, DollarSign, Package, TrendingUp, Clock, Plus, BarChart3, UtensilsCrossed } from "lucide-react"
-import { Order } from "../interfaces"
+import { Order } from "@/app/interfaces"
+import API from "@/lib/axios"
+
 
 
 
@@ -23,9 +25,8 @@ export default function DashboardPage() {
   const fetchOrders = async () => {
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}orders`)
-      if (response.ok) {
-        const data = await response.json()
+      const {data} = await API.get('/orders')
+      if (data) {
         setOrders(data)
       }
     } catch (error) {
@@ -208,7 +209,7 @@ const getTotalRevenue = () => {
                 <p className="text-gray-500 text-lg sm:text-xl mb-2">No hay órdenes registradas</p>
                 <p className="text-gray-400 text-sm sm:text-base mb-6">Crea tu primera orden para comenzar</p>
                 <Button asChild className="bg-amber-600 hover:bg-amber-700">
-                  <Link href="/orders/create">
+                  <Link href="/main/orders/create">
                     <Plus className="w-4 h-4 mr-2" />
                     Crear Primera Orden
                   </Link>
